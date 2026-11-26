@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prisma – Conhecimento em três dimensões</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;1,400&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#090a10;--bg2:#0d0f19;--foot:#101823;--ink:#eceef6;--muted:#9a9db5;--dim:#6c6f88;--line:#1d2030;--cy:#6dd0ee;--cy-ink:#04202a;--vi:#6a49d6;--sh:rgba(109,208,238,.18)}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3f5fa;--bg2:#fff;--foot:#e6ebf4;--ink:#10131f;--muted:#4d5270;--dim:#6b7190;--line:#d5daea;--cy:#0b6e8c;--cy-ink:#fff;--vi:#5a3ad0;--sh:rgba(11,110,140,.15)}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;text-transform:uppercase;letter-spacing:.2em;font-size:.68rem}
+.serif{font-family:Newsreader,Georgia,serif;font-weight:400}
+.w{max-width:1200px;margin:0 auto;padding:0 24px}
+.cy{color:var(--cy)}.mut{color:var(--muted)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .w{display:flex;align-items:center;justify-content:space-between;height:74px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Newsreader,Georgia,serif;font-weight:600;letter-spacing:.22em;font-size:1.15rem;color:var(--ink);text-decoration:none}
+.nav{display:flex;gap:30px}.nav a,.rt a{color:var(--muted);text-decoration:none}.nav a:hover,.rt a:hover{color:var(--ink)}
+.rt{display:flex;align-items:center;gap:20px}
+.cart{border:1px solid color-mix(in srgb,var(--cy) 50%,transparent);background:var(--sh);color:var(--cy);border-radius:999px;padding:8px 16px;display:flex;gap:8px;align-items:center}
+.cart b{background:var(--cy);color:var(--cy-ink);border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;font-size:.62rem;letter-spacing:0}
+.btn{border:1px solid var(--cy);background:var(--cy);color:var(--cy-ink);border-radius:999px;padding:14px 26px;text-decoration:none;display:inline-block}
+.btn.o{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:9px 16px}.btn:disabled{opacity:.5}
+.hero{position:relative;min-height:calc(100vh - 74px);display:flex;align-items:center;overflow:hidden;background:radial-gradient(60% 50% at 80% 80%,rgba(106,73,214,.18),transparent),linear-gradient(var(--line) 1px,transparent 1px) 0 0/80px 80px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/80px 80px}
+.hero .w{position:relative;z-index:2;width:100%}
+.eyebrow{display:flex;align-items:center;gap:14px;color:var(--cy);margin-bottom:22px}.eyebrow::before{content:"";width:50px;height:1px;background:var(--cy)}
+h1{font-size:clamp(2.6rem,8vw,5.4rem);line-height:1.02;letter-spacing:-.02em;margin:0 0 24px;max-width:12em}
+h1 em{color:var(--cy)}
+.lead{color:var(--muted);max-width:30em;font-size:1.1rem;margin:0 0 32px}
+.stats{display:flex;gap:44px;border-top:1px solid var(--line);margin-top:56px;padding-top:22px}
+.stats b{display:block;font-size:1.7rem}.stats span{color:var(--dim)}
+.shapes{position:absolute;inset:0;z-index:1;pointer-events:none}
+.shapes svg{position:absolute;transition:transform .3s ease-out;animation:fl 9s ease-in-out infinite}
+@keyframes fl{50%{translate:0 -14px}}
+@media (prefers-reduced-motion:reduce){.shapes svg{animation:none;transition:none}html{scroll-behavior:auto}}
+section.s{padding:84px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(2rem,5vw,3.1rem);line-height:1.08;letter-spacing:-.01em;margin:8px 0 12px}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:32px 26px}
+.bk{display:flex;flex-direction:column;gap:14px}
+.cv{background:var(--bg2);border:1px solid var(--line);aspect-ratio:3/4;padding:18px;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .2s,transform .2s,box-shadow .2s}
+.bk:hover .cv,.bk:focus-within .cv{border-color:var(--cy);transform:translateY(-4px);box-shadow:0 18px 40px -18px var(--cy)}
+.cv .tp{display:flex;justify-content:space-between;color:var(--dim)}
+.cv svg{width:90px;height:90px;margin:auto}
+.cv h3{font-size:1.45rem;line-height:1.15;margin:0 0 6px}
+.bk .row{display:flex;justify-content:space-between;align-items:center;color:var(--dim)}
+.pr{font-family:Newsreader,Georgia,serif;font-size:1.35rem;color:var(--cy)}
+.add{width:100%;border:1px solid var(--line);background:transparent;border-radius:999px;padding:9px}
+.add:hover{border-color:var(--cy);color:var(--cy)}.add[aria-pressed="true"]{background:var(--sh);border-color:var(--cy);color:var(--cy)}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.cat{border:1px solid var(--line);background:var(--bg2);padding:44px 34px}.cat:hover{border-color:var(--cy)}
+.cat svg{width:90px;height:90px;display:block;margin:0 auto 40px}.cat h3{font-size:1.6rem;margin:0 0 8px}
+.mf{display:grid;grid-template-columns:1fr 1.2fr;gap:50px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;border-top:1px solid var(--line);margin-top:30px;padding-top:26px}
+.three h4{font-family:Newsreader,Georgia,serif;font-weight:400;font-size:1.25rem;margin:0 0 8px}.three p{margin:0;color:var(--muted);font-size:.92rem}
+footer{background:var(--foot);border-top:1px solid var(--line);padding:56px 0 26px}
+.fg{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}.fg a{display:block;color:var(--ink);text-decoration:none;margin-top:8px}
+.copy{border-top:1px solid var(--line);margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--dim)}
+.pg{padding:70px 0 90px;min-height:70vh}
+.box{border:1px solid var(--line);background:var(--bg2);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:18px 0}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.cl{display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start}
+.it{display:flex;align-items:center;gap:16px;border-top:1px solid var(--line);padding:16px 0}
+.it .th{width:64px;height:64px;border:1px solid var(--line);background:var(--bg2);display:grid;place-items:center}.it .th svg{width:34px;height:34px}.it .t{flex:1}
+.rm{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:none}
+.sum{border:1px solid var(--line);background:var(--bg2);padding:24px}.sum .tot{display:flex;justify-content:space-between;align-items:center;margin:16px 0}
+.ov{position:fixed;inset:0;background:rgba(3,4,10,.7);z-index:40;display:none;align-items:center;justify-content:center;padding:16px}.ov.on{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--line);width:min(460px,100%);max-height:100%;overflow:auto;padding:26px}
+.mh{display:flex;justify-content:space-between;align-items:center}.mh h3{font-size:1.6rem;margin:0}
+.x{border:0;background:none;font-size:1.8rem;line-height:1}
+label{display:block;margin:14px 0 6px;color:var(--dim)}
+input{width:100%;padding:12px;background:var(--bg);color:var(--ink);border:1px solid var(--line);font:inherit}
+.err{color:#ff7a7a;min-height:1.2em;font-size:.85rem}
+.pay{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding:12px 0}
+.bk{color:inherit;text-decoration:none}
+.cv svg{transform:perspective(500px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s}
+.shapes svg{display:none}
+.pd{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:36px;align-items:start}
+.pf{position:relative;aspect-ratio:1;border:1px solid var(--line);background:radial-gradient(60% 60% at 80% 10%,rgba(109,208,238,.12),transparent),linear-gradient(var(--line) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/48px 48px,var(--bg2)}
+.tags{display:flex;gap:8px;flex-wrap:wrap}.tags span{border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.bl{list-style:none;padding:20px 0;margin:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.bl li{padding:4px 0 4px 18px;position:relative;color:var(--muted)}.bl li::before{content:'•';position:absolute;left:0;color:var(--cy)}
+@media (max-width:860px){.pd{grid-template-columns:1fr}}
+@media (max-width:860px){.nav{display:none}.mf,.cl{grid-template-columns:1fr}.three{grid-template-columns:1fr}.stats{gap:24px}.rt .lib{display:none}}
+</style>
+</head>
+<body>
+<header><div class="w">
+ <a class="logo" href="#">
+  <svg width="26" height="26" viewBox="0 0 40 40" fill="none" stroke="var(--cy)" stroke-width="1.5" aria-hidden="true"><path d="M20 3l15 9v16L20 37 5 28V12z"/><path d="M20 3v34M5 12l30 16M35 12L5 28"/></svg>PRISMA</a>
+ <nav class="nav mono" aria-label="Seções"><a href="#catalogo">Catálogo</a><a href="#categorias">Categorias</a><a href="#manifesto">Manifesto</a></nav>
+ <div class="rt mono"><a class="lib" href="#biblioteca">Biblioteca</a><a class="cart mono" href="#carrinho" aria-label="Abrir carrinho">🛍 Carrinho <b id="cnt">0</b></a></div>
+</div></header>
+<div id="app"></div>
+<footer><div class="w">
+ <div class="fg">
+  <div><a class="logo" href="#" style="margin:0">PRISMA</a><p class="mut" style="max-width:24em">Cursos e guias práticos em formato de web book. Negócios, tecnologia e desenvolvimento pessoal, lidos em três dimensões.</p></div>
+  <div class="mono"><span class="cy" style="color:var(--dim)">Navegar</span><a href="#catalogo">Catálogo</a><a href="#categorias">Categorias</a><a href="#manifesto">Manifesto</a></div>
+  <div class="mono"><span style="color:var(--dim)">Contato</span><a id="mail" href="#"></a><span class="mut" style="display:block;margin-top:8px">Suporte por e-mail</span></div>
+ </div>
+ <div class="copy mono"><span>© 2026 Prisma. Todos os direitos reservados</span><span>Pagamento seguro · Entrega digital imediata</span></div>
+</div></footer>
+<div class="ov" id="ov"><div class="modal" role="dialog" aria-modal="true" id="md"></div></div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'></script>
+<script>
+// ===== CONFIGURE AQUI =====
+var CFG={
+ gaId:"",                      // seu ID do Google Analytics 4, ex.: "G-ABC123XYZ" (só funciona fora do claude.ai, veja o aviso)
+ email:"contato@prisma.books",
+ whats:"5527999999999",
+ modoTeste:true                // true: "Verificar pagamento" libera o título sem checar. false: abre o WhatsApp para enviar o comprovante
+};
+// "link" = Payment Link do Stripe de cada título (Stripe > Payment Links > Criar link)
+var P=[
+ {id:1,n:"Finanças pessoais do zero",a:"Marina Costa",k:"Curso",c:"Desenvolvimento",g:186,p:39.9,s:"cube",col:"var(--cy)",link:"https://buy.stripe.com/SEU_LINK_FINANCAS"},
+ {id:2,n:"Automação com IA na prática",a:"Rafael Duarte",k:"Guia",c:"Tecnologia",g:142,p:54.9,s:"sphere",col:"var(--vi)",link:"https://buy.stripe.com/SEU_LINK_AUTOMACAO"},
+ {id:3,n:"Meu primeiro app em 30 dias",a:"Júlia Andrade",k:"Playbook",c:"Tecnologia",g:210,p:64.9,s:"cube",col:"var(--ink)",link:"https://buy.stripe.com/SEU_LINK_APP"},
+ {id:4,n:"Copy que converte",a:"Pedro Lins",k:"Guia",c:"Negócios",g:118,p:34.9,s:"gem",col:"var(--cy)",link:"https://buy.stripe.com/SEU_LINK_COPY"},
+ {id:5,n:"Tráfego pago sem enrolação",a:"Camila Reis",k:"Curso",c:"Negócios",g:164,p:49.9,s:"ring",col:"var(--vi)",link:"https://buy.stripe.com/SEU_LINK_TRAFEGO"},
+ {id:6,n:"Estudar melhor em menos tempo",a:"Bruno Tavares",k:"Playbook",c:"Desenvolvimento",g:132,p:44.9,s:"pyr",col:"var(--ink)",link:"https://buy.stripe.com/SEU_LINK_ESTUDAR"}
+];
+var CN={'Negócios':'Negócios e marketing','Tecnologia':'Tecnologia e programação','Desenvolvimento':'Desenvolvimento pessoal'};
+var DET={
+1:{t:'Organize o dinheiro em quatro semanas, sem planilha complicada.',d:'Um curso em texto para quem nunca fez orçamento na vida. Você vai mapear o que entra e o que sai, montar uma reserva pequena e sair da dívida do cartão com um plano de quatro semanas.',b:['Montar seu primeiro orçamento em uma tarde','Separar gasto fixo, variável e supérfluo','Sair do rotativo do cartão sem novos empréstimos','Criar uma reserva de emergência começando com R$ 50','Definir metas de curto e longo prazo']},
+2:{t:'Automatize tarefas repetitivas com IA, sem escrever código.',d:'Um guia passo a passo para ligar ferramentas de IA ao seu dia: respostas, relatórios e rotinas que se fazem sozinhas.',b:['Escolher as 3 tarefas que mais tomam seu tempo','Montar seu primeiro fluxo automático','Criar prompts que dão resultado confiável','Conectar e-mail, planilhas e agenda','Medir quanto tempo você economizou']},
+3:{t:'Do zero a um app no ar em 30 dias.',d:'Um playbook diário para tirar a ideia do papel: definir o problema, desenhar as telas, construir e publicar.',b:['Definir o problema e o público','Desenhar as telas no papel','Construir a primeira versão','Testar com 5 pessoas reais','Publicar e coletar feedback']},
+4:{t:'Textos que explicam, convencem e vendem.',d:'Aprenda a estrutura por trás de páginas, anúncios e mensagens que levam as pessoas a agir, com modelos prontos.',b:['Escrever títulos que prendem a atenção','Transformar características em benefícios','Estruturar uma página de vendas curta','Usar prova e garantia com honestidade','Revisar e testar duas versões']},
+5:{t:'Tráfego pago direto ao ponto, para quem tem pouco orçamento.',d:'Um curso em texto para anunciar com pouco dinheiro: escolher o público, montar a campanha e ler os números.',b:['Definir meta e orçamento do primeiro teste','Escolher o público certo','Montar anúncio e página de destino','Ler custo por clique e conversão','Escalar só o que deu resultado']},
+6:{t:'Métodos simples para aprender mais em menos horas.',d:'Um playbook de rotina de estudo com técnicas comprovadas: revisão espaçada, prática ativa e foco sem esforço.',b:['Montar uma rotina de estudo realista','Usar revisão espaçada','Praticar em vez de só reler','Eliminar distrações do ambiente','Avaliar seu progresso toda semana']}
+};
+var SH={
+ cube:'<path d="M50 8l36 21v42L50 92 14 71V29z"/><path d="M50 50v42M14 29l36 21 36-21"/>',
+ sphere:'<circle cx="50" cy="50" r="40"/><ellipse cx="50" cy="50" rx="18" ry="40"/><ellipse cx="50" cy="50" rx="40" ry="14"/>',
+ gem:'<path d="M50 5l30 45-30 45-30-45z"/><path d="M20 50h60M50 5v90"/>',
+ ring:'<circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="6"/><path d="M80 50c0-18 14-28 14-12s-14 26-30 28"/>',
+ pyr:'<path d="M50 6l40 84H10z"/><path d="M50 6v50M10 90l40-34 40 34"/>'
+};
+var $=function(i){return document.getElementById(i)};
+var brl=function(v){return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})};
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+function ico(s,col,sw){return '<svg viewBox="0 0 100 100" fill="none" stroke="'+col+'" stroke-width="'+(sw||1.3)+'" stroke-linejoin="round" aria-hidden="true">'+SH[s]+'</svg>'}
+function byId(i){return P.filter(function(p){return p.id===i})[0]}
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var cart=ld("pr_cart",[]),owned=ld("pr_owned",[]),order=ld("pr_order",null),last=null;
+
+// ---- Google Analytics 4 ----
+function gaInit(){
+ window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};
+ if(!CFG.gaId)return;
+ gtag("js",new Date());gtag("config",CFG.gaId,{send_page_view:false});
+ var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(CFG.gaId);document.head.appendChild(s);
+}
+function track(n,p){if(window.gtag&&CFG.gaId)gtag("event",n,p||{})}
+function items(a){return a.map(function(p){return{item_id:String(p.id),item_name:p.n,item_category:p.c,price:p.p,quantity:1}})}
+
+function total(){return cart.reduce(function(t,i){return t+byId(i).p},0)}
+function cnt(){$("cnt").textContent=cart.length;sv("pr_cart",cart)}
+
+function home(){
+ var cs=["Negócios","Tecnologia","Desenvolvimento"],cd={"Negócios":["Negócios e marketing","Copy, tráfego, vendas e gestão para quem está montando o primeiro negócio.","sphere","var(--cy)"],"Tecnologia":["Tecnologia e programação","Do primeiro código à automação com IA, em guias que você executa passo a passo.","cube","var(--vi)"],"Desenvolvimento":["Desenvolvimento pessoal","Finanças, foco e rotina de estudo com métodos simples de manter.","pyr","var(--ink)"]};
+ return '<section class="hero"><div class="shapes" id="shp" aria-hidden="true">'+
+ '<svg data-d="14" style="right:22%;top:14%;width:380px" viewBox="0 0 400 400"><polygon points="140,40 300,70 390,200 330,330 130,360 10,220" fill="#2a5368" opacity=".7"/></svg>'+
+ '<svg data-d="26" style="right:4%;top:8%;width:340px;rotate:18deg" viewBox="0 0 300 200"><ellipse cx="150" cy="100" rx="125" ry="70" fill="none" stroke="#3d2d86" stroke-width="48"/></svg>'+
+ '<svg data-d="10" style="right:6%;top:46%;width:260px;rotate:8deg" viewBox="0 0 200 200"><polygon points="20,40 140,10 190,60 175,180 40,170" fill="#2c2b3c"/></svg>'+
+ '<svg data-d="34" style="right:34%;bottom:6%;width:230px" viewBox="0 0 200 200" fill="none" stroke="var(--cy)" stroke-width="1" opacity=".6"><ellipse cx="100" cy="100" rx="90" ry="40"/><ellipse cx="100" cy="100" rx="90" ry="40" transform="rotate(60 100 100)"/><ellipse cx="100" cy="100" rx="90" ry="40" transform="rotate(120 100 100)"/></svg>'+
+ '</div><div class="w"><div class="eyebrow mono">Livraria volumétrica</div><h1 class="serif">Conhecimento em <em>três dimensões</em>.</h1>'+
+ '<p class="lead">Cursos e guias práticos em formato de web book. Geometria viva, texto que respira na tela: compre, receba na hora e aplique ainda hoje.</p>'+
+ '<a class="btn mono" href="#catalogo">Explorar catálogo</a> <a class="btn o mono" href="#manifesto">Ler o manifesto</a>'+
+ '<div class="stats serif"><div><b>0'+P.length+'</b><span class="mono">Títulos</span></div><div><b>03</b><span class="mono">Categorias</span></div><div><b>∞</b><span class="mono">Releituras</span></div></div></div></section>'+
+ '<section class="s" id="catalogo"><div class="w"><div class="hd"><div><span class="eyebrow mono" style="margin:0">Estante cinética</span><h2 class="serif">Títulos em movimento</h2><p class="mut" style="max-width:30em;margin:0">Feitos para quem está começando: linguagem direta, exemplos reais e exercícios curtos.</p></div><div class="mono mut" style="text-align:right">0'+P.length+' títulos disponíveis</div></div><div class="grid">'+
+ P.map(function(p,i){var on=cart.indexOf(p.id)>-1||owned.indexOf(p.id)>-1;return '<a class="bk" href="#livro-'+p.id+'"><div class="cv"><div class="tp mono"><span>0'+(i+1)+'</span><span>'+p.c+'</span></div>'+ico(p.s,p.col)+'<div><h3 class="serif">'+p.n+'</h3><div class="mono mut" style="font-size:.6rem">'+p.a+' · '+p.k+'</div></div></div><div class="row"><span class="mono">'+p.g+' pág.</span><span class="pr">'+brl(p.p)+'</span></div></a>'}).join("")+'</div></div></section>'+
+ '<section class="s" id="categorias"><div class="w"><span class="eyebrow mono" style="margin:0">Categorias</span><h2 class="serif">Três áreas para começar</h2><p class="mut" style="max-width:34em;margin:0 0 36px">Cada área tem uma geometria própria. Esferas fluem como um curso, cubos se estruturam como um guia, pirâmides sustentam um playbook.</p><div class="cats">'+
+ cs.map(function(c){var d=cd[c],n=P.filter(function(p){return p.c===c}).length;return '<div class="cat"><svg viewBox="0 0 100 100" fill="none" stroke="'+d[3]+'" stroke-width="1.3" aria-hidden="true">'+SH[d[2]]+'</svg><h3 class="serif">'+d[0]+'</h3><p class="mut">'+d[1]+'</p><span class="mono cy">0'+n+' títulos</span></div>'}).join("")+'</div></div></section>'+
+ '<section class="s" id="manifesto"><div class="w mf"><div><span class="eyebrow mono" style="margin:0">Manifesto</span><h2 class="serif" style="font-size:clamp(2rem,5vw,3.4rem)">Um curso não precisa ser um vídeo de quatro horas.</h2></div><div class="mut"><p>Web book é o formato entre o livro e o curso: você lê no seu ritmo, mas com a estrutura de quem está executando. Cada capítulo termina em algo que você consegue fazer, não em uma promessa.</p><p>Nossos títulos são feitos para quem está começando: estudantes e iniciantes em negócios, tecnologia e desenvolvimento pessoal. Sem jargão, sem pré-requisito. Texto curto, exemplos reais e checklists para aplicar no mesmo dia.</p><div class="three"><div><h4>Entrega imediata</h4><p>Pagou, o web book abre na hora. Sem espera, sem frete, sem download perdido.</p></div><div><h4>Acesso vitalício</h4><p>Uma compra, para sempre. Releia quantas vezes quiser, em qualquer tela.</p></div><div><h4>Atualizações contínuas</h4><p>Cada guia é revisado e ampliado, e você recebe as novas versões sem pagar de novo.</p></div></div></div></div></section>';
+}
+function cartView(){
+ if(!cart.length)return '<div class="w pg"><span class="eyebrow mono" style="margin:0">Carrinho</span><h2 class="serif">Seu carrinho</h2><div class="empty">Seu carrinho está vazio.<br><br><a class="btn mono" href="#catalogo">Explorar catálogo</a></div></div>';
+ return '<div class="w pg"><span class="eyebrow mono" style="margin:0">Carrinho</span><h2 class="serif" style="font-size:3rem">Seu carrinho</h2><div class="cl"><div>'+
+ cart.map(function(i){var p=byId(i);return '<div class="it"><div class="th">'+ico(p.s,p.col)+'</div><div class="t"><div class="serif" style="font-size:1.25rem">'+p.n+'</div><div class="mono mut" style="font-size:.6rem">'+p.a+'</div></div><span class="pr">'+brl(p.p)+'</span><button class="rm" data-rm="'+i+'" aria-label="Remover '+p.n+'">🗑</button></div>'}).join("")+
+ '</div><aside class="sum"><span class="mono cy">Resumo</span><div class="tot"><span>Total</span><span class="pr" style="font-size:1.9rem">'+brl(total())+'</span></div><button class="btn mono" style="width:100%" data-a="checkout">Finalizar compra</button><p class="mono mut" style="font-size:.58rem;text-align:center;margin:14px 0 0">Entrega digital imediata · Acesso vitalício</p></aside></div></div>';
+}
+function libView(){
+ var h='<div class="w pg"><span class="eyebrow mono" style="margin:0">Biblioteca</span><h2 class="serif" style="font-size:3rem">Seus web books</h2>';
+ if(order)h+='<p class="mono mut">Pedido '+order.id+'</p><div class="box"><span>Pagamento pendente de <b>'+brl(order.v)+'</b></span><button class="btn o sm mono" data-a="verify">Verificar pagamento</button></div>';
+ if(!owned.length)h+='<div class="box empty" style="display:block">Você ainda não tem nenhum título.<br><br><a class="btn mono" href="#catalogo">Explorar catálogo</a></div>';
+ else h+='<div class="grid" style="margin-top:20px">'+owned.map(function(i){var p=byId(i);return '<article class="bk"><div class="cv" style="aspect-ratio:auto;min-height:200px"><div class="tp mono"><span>'+p.k+'</span><span>'+p.c+'</span></div>'+ico(p.s,p.col)+'<h3 class="serif">'+p.n+'</h3></div><button class="btn mono sm" data-read="'+i+'">Ler agora</button></article>'}).join("")+'</div>';
+ return h+'<p><a class="mono mut" style="text-decoration:none" href="#gestao">Painel de gestão →</a></p></div>';
+}
+var R3=null,admin=false,ADMIN_HASH='a054d8364750b15c154a17e1c1a8a5a0437b3b8edbd9af2c438ae51e86e9d2ba'; // SHA-256 da chave. Chave de teste: admin-teste-123
+function sha(s){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return [].map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2)}).join('')})}
+function hex(c){return c.indexOf('cy')>-1?0x6dd0ee:c.indexOf('vi')>-1?0x8a6cf0:0xeceef6}
+function stop3D(){if(!R3)return;cancelAnimationFrame(R3.f);removeEventListener('pointermove',R3.m);removeEventListener('resize',R3.z);R3.r.dispose();R3.r.domElement.remove();R3=null}
+function mount3D(a,b,c){try{mount3Dx(a,b,c)}catch(e){R3=null}}
+function mount3Dx(host,kind,col){
+ if(!window.THREE||!host)return;
+ var T=THREE,w=host.clientWidth||600,h=host.clientHeight||400,hero=kind==='hero',k=Math.min(1,(w/h)/1.7);
+ var r=new T.WebGLRenderer({antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(w,h);r.domElement.style.cssText='position:absolute;inset:0;width:100%;height:100%';host.appendChild(r.domElement);
+ var s=new T.Scene(),cam=new T.PerspectiveCamera(45,w/h,.1,100),os=[];cam.position.z=hero?9:5;
+ s.add(new T.AmbientLight(0xffffff,.6));var dl=new T.DirectionalLight(0xffffff,1);dl.position.set(3,4,5);s.add(dl);
+ function add(g,m,x,y,z,sc,sp){var o=new T.Mesh(g,m);o.position.set(x*k,y,z);o.scale.setScalar(sc);o.userData.sp=sp;s.add(o);os.push(o)}
+ function wire(g,c,x,y,z,sc,sp,op){var o=new T.LineSegments(new T.WireframeGeometry(g),new T.LineBasicMaterial({color:c,transparent:true,opacity:op||1}));o.position.set(x*k,y,z);o.scale.setScalar(sc);o.userData.sp=sp;s.add(o);os.push(o)}
+ if(hero){add(new T.IcosahedronGeometry(1,0),new T.MeshStandardMaterial({color:0x2a5368,flatShading:true,roughness:.6}),3.2,.3,-1,1.6,.004);add(new T.TorusGeometry(1,.38,32,64),new T.MeshStandardMaterial({color:0x3d2d86,metalness:.4,roughness:.35}),5,2.2,-1,1.1,.006);add(new T.BoxGeometry(1,1,1),new T.MeshStandardMaterial({color:0x34324a,flatShading:true}),5,-1.6,-1,1.5,.005);wire(new T.TorusKnotGeometry(.8,.28,90,10),0x6dd0ee,1.8,-2,0,1,.008,.7)}
+ else{var G={pcube:new T.BoxGeometry(1.8,1.8,1.8),psphere:new T.SphereGeometry(1.3,12,9),pgem:new T.OctahedronGeometry(1.5),pring:new T.TorusGeometry(1,.4,10,24),ppyr:new T.ConeGeometry(1.4,2.2,4)};wire(G[kind],col,0,0,0,1,.006)}
+ function mv(e){R3.x=e.clientX/innerWidth-.5;R3.y=e.clientY/innerHeight-.5}
+ function z(){var a=host.clientWidth,b=host.clientHeight;if(!a||!b)return;r.setSize(a,b);cam.aspect=a/b;cam.updateProjectionMatrix()}
+ var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;R3={r:r,m:mv,z:z,x:0,y:0,f:0};addEventListener('pointermove',mv);addEventListener('resize',z);
+ (function tick(){os.forEach(function(o){if(!rm){o.rotation.x+=o.userData.sp;o.rotation.y+=o.userData.sp*1.5}});s.rotation.y+=(R3.x*1.1-s.rotation.y)*.06;s.rotation.x+=(R3.y*.8-s.rotation.x)*.06;r.render(s,cam);R3.f=requestAnimationFrame(tick)})()
+}
+function bookView(id){var p=byId(id),d=DET[id],inC=cart.indexOf(id)>-1,own=owned.indexOf(id)>-1||admin;return `<div class='w pg'><a class='mono mut' href='#catalogo' style='text-decoration:none'>← Catálogo</a><div class='pd'><div class='pf' id='pcv' role='img' aria-label='Forma 3D: ${p.n}'></div><div><div class='tags mono'><span class='cy'>${CN[p.c]}</span><span>${p.k}</span><span>Iniciante</span></div><h1 class='serif' style='font-size:clamp(2.2rem,5vw,3.2rem);margin:18px 0 8px;max-width:none'>${p.n}</h1><div class='mono mut'>${p.a} · ${p.g} páginas</div><p style='font-size:1.15rem;color:var(--muted);margin:22px 0 14px'>${d.t}</p><p class='mut'>${d.d}</p><ul class='bl'>${d.b.map(function(x){return '<li>'+x+'</li>'}).join('')}</ul><div style='display:flex;align-items:baseline;gap:20px;margin-bottom:22px'><span class='pr' style='font-size:2.6rem'>${brl(p.p)}</span><span class='mono cy'>Acesso vitalício</span></div><div style='display:flex;gap:12px;flex-wrap:wrap'>${own?`<button class='btn mono' data-read='${id}'>Ler agora</button>`:`<button class='btn mono' data-buy='${id}'>Comprar agora</button><button class='btn o mono' data-add='${id}'>${inC?'No carrinho':'Adicionar ao carrinho'}</button>`}</div></div></div></div>`}
+function admView(){if(!admin)return `<div class='w pg' style='max-width:480px'><span class='eyebrow mono' style='margin:0'>Gestão</span><h2 class='serif'>Acesso do administrador</h2><label class='mono' for='ky'>Código de 6 dígitos do seu app autenticador</label><input id='ky' inputmode='numeric' maxlength='6' autocomplete='one-time-code'><div class='err' id='er'></div><button class='btn mono' data-a='login'>Entrar</button></div>`;return `<div class='w pg'><span class='eyebrow mono' style='margin:0'>Gestão</span><h2 class='serif' style='font-size:3rem'>Painel de gestão</h2><p class='mut'>Este painel vale só para este navegador. Para mudar preços e links de pagamento, edite a lista de títulos no código.</p><div class='box' style='display:block'>${P.map(function(p){return `<div class='pay'><span>${p.n}<br><span class='mono mut' style='font-size:.6rem'>${p.link}</span></span><span class='pr' style='font-size:1rem'>${brl(p.p)}</span><button class='btn o sm mono' data-read='${p.id}'>Ler</button></div>`}).join('')}</div>${order?`<div class='box'><span>Pedido ${order.id} · <b>${brl(order.v)}</b></span><button class='btn sm mono' data-a='release'>Liberar acesso</button></div>`:`<p class='mut'>Nenhum pedido pendente neste navegador.</p>`}<div style='display:flex;gap:12px;flex-wrap:wrap'><button class='btn o sm mono' data-a='all'>Liberar todos os títulos (teste)</button><button class='btn o sm mono' data-a='out'>Sair</button></div></div>`}
+function read(i,k){var p=byId(i),b=DET[i].b;show(head(p.n)+`<div class='mono cy'>Capítulo ${k+1} de ${b.length}</div><h4 class='serif' style='font-size:1.5rem;margin:8px 0'>${b[k]}</h4><p class='mut'>Texto de exemplo do capítulo. Troque este parágrafo pelo conteúdo do seu web book e termine cada capítulo com uma tarefa prática.</p><div class='pay' style='border:0'><button class='btn o sm mono' data-ch='${i}:${k-1}' ${k?'':'disabled'}>← Anterior</button><button class='btn sm mono' data-ch='${i}:${k+1}' ${k<b.length-1?'':'disabled'}>Próximo →</button></div>`);track('select_content',{content_type:'webbook',item_id:String(i)})}
+var TOTP_SECRET='KPZYCXIY4G5Q3KLBP7AJPWYYXDJQDPB2'; // segredo do código rotativo (base32). TROQUE por um seu antes de publicar
+function b32(s){var A='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567',bits='',o=[];s.toUpperCase().split('').forEach(function(c){bits+=('00000'+A.indexOf(c).toString(2)).slice(-5)});for(var i=0;i+8<=bits.length;i+=8)o.push(parseInt(bits.substr(i,8),2));return new Uint8Array(o)}
+function totp(step){var c=new ArrayBuffer(8),v=new DataView(c);v.setUint32(4,step>>>0);return crypto.subtle.importKey('raw',b32(TOTP_SECRET),{name:'HMAC',hash:'SHA-1'},false,['sign']).then(function(k){return crypto.subtle.sign('HMAC',k,c)}).then(function(sig){var h=new Uint8Array(sig),o=h[19]&15,n=(((h[o]&127)<<24)|(h[o+1]<<16)|(h[o+2]<<8)|h[o+3])%1000000;return ('00000'+n).slice(-6)})}
+function checkCode(code){var t=Math.floor(Date.now()/30000);return Promise.all([t-1,t,t+1].map(totp)).then(function(a){return a.indexOf(code.trim())>-1})}
+function sUrl(p){return p.link+'?client_reference_id='+order.id+(order.e?'&prefilled_email='+encodeURIComponent(order.e):'')}
+function startPay(){order={id:'PR'+Date.now().toString(36).toUpperCase(),n:'',e:'',ids:cart.slice(),v:total()};sv('pr_order',order);track('begin_checkout',{currency:'BRL',value:order.v,items:items(cart.map(byId))});show(head('Pagamento')+`<p class='mut'>Você será levado à página segura do Stripe, onde informa seu e-mail e paga. Depois volte aqui e abra a sua biblioteca.</p>`+order.ids.map(function(i){var p=byId(i);return `<div class='pay'><span>${p.n}<br><span class='pr' style='font-size:1rem'>${brl(p.p)}</span></span><a class='btn sm mono' target='_blank' rel='noopener' href='${esc(sUrl(p))}' data-pay='${p.id}'>Pagar</a></div>`}).join('')+`<button class='btn o mono' style='width:100%;margin-top:14px' data-a='lib'>Ir para a biblioteca</button>`);if(order.ids.length===1)window.open(sUrl(byId(order.ids[0])),'_blank','noopener');cart=[];cnt()}
+function head(t){return '<div class="mh"><h3 class="serif">'+t+'</h3><button class="x" data-a="x" aria-label="Fechar">×</button></div>'}
+function show(h){$("md").innerHTML=h;$("ov").classList.add("on");last=document.activeElement}
+function hide(){$("ov").classList.remove("on");if(last&&last.focus)last.focus()}
+
+function route(){
+ var h=location.hash.slice(1),m=/^livro-([0-9]+)$/.exec(h),v;if(m&&!byId(+m[1]))m=null;v=m?"livro":(h==="carrinho"||h==="biblioteca"||h==="gestao")?h:"home";stop3D();
+ $("app").innerHTML=v==="home"?home():v==="carrinho"?cartView():v==="livro"?bookView(+m[1]):v==="gestao"?admView():libView();
+ cnt();
+ if(v==="home"){var hs=$("shp");if(hs)mount3D(hs,"hero")}if(v==="livro"){var bp=byId(+m[1]);mount3D($("pcv"),"p"+bp.s,hex(bp.col));track("view_item",{currency:"BRL",value:bp.p,items:items([bp])})}if(v==="home"&&h){var e=$(h);if(e)e.scrollIntoView()}else window.scrollTo(0,0);
+ track("page_view",{page_title:document.title,page_location:location.href,page_path:"/"+(h||"")});
+ if(v==="carrinho")track("view_cart",{currency:"BRL",value:total(),items:items(cart.map(byId))});
+}
+function paidNow(){
+ var its=order.ids.map(byId);
+ order.ids.forEach(function(i){if(owned.indexOf(i)<0)owned.push(i)});
+ sv("pr_owned",owned);
+ track("purchase",{transaction_id:order.id,currency:"BRL",value:order.v,items:items(its)});
+ order=null;sv("pr_order",null);
+}
+document.addEventListener("click",function(e){
+ if(e.target.id==="ov"){hide();return}
+ var b=e.target.closest("button");if(!b)return;
+ var d=b.dataset;
+ if(d.add){var i=+d.add,k=cart.indexOf(i);
+  if(k>-1)cart.splice(k,1);else{cart.push(i);var p=byId(i);track("add_to_cart",{currency:"BRL",value:p.p,items:items([p])})}
+  route();return}
+ if(d.rm){cart.splice(cart.indexOf(+d.rm),1);route();return}
+ if(d.read){read(+d.read,0);return}if(d.ch){var cp=d.ch.split(':');read(+cp[0],+cp[1]);return}if(d.buy){var bi=+d.buy;if(cart.indexOf(bi)<0){cart.push(bi);var bq=byId(bi);track('add_to_cart',{currency:'BRL',value:bq.p,items:items([bq])})}location.hash='#carrinho';return}
+ var a=d.a;
+ if(a==="x")hide();else if(a==="login"){checkCode($("ky").value).then(function(ok){if(ok){admin=true;route()}else $("er").textContent="Código incorreto ou expirado."})}else if(a==="out"){admin=false;route()}else if(a==="release"){if(order)paidNow();route()}else if(a==="all"){P.forEach(function(p){if(owned.indexOf(p.id)<0)owned.push(p.id)});sv("pr_owned",owned);route()}
+ else if(a==="checkout"){
+  startPay()}
+ else if(a==="pay"){var n=$("nm").value.trim(),m=$("em").value.trim();
+  if(n.length<2||!/^\S+@\S+\.\S+$/.test(m)){$("er").textContent="Informe seu nome e um e-mail válido.";return}
+  order={id:"PR"+Date.now().toString(36).toUpperCase(),n:n,e:m,ids:cart.slice(),v:total()};sv("pr_order",order);
+  track("begin_checkout",{currency:"BRL",value:order.v,items:items(cart.map(byId))});
+  show(head("Pagamento")+'<p class="mut">Pague cada título na página segura de pagamento. Depois volte e use “Verificar pagamento” na sua biblioteca.</p>'+
+   order.ids.map(function(i){var p=byId(i);return '<div class="pay"><span>'+p.n+'<br><span class="pr" style="font-size:1rem">'+brl(p.p)+'</span></span><a class="btn sm mono" target="_blank" rel="noopener" href="'+esc(sUrl(p))+'" data-pay="'+p.id+'">Pagar</a></div>'}).join("")+
+   '<button class="btn o mono" style="width:100%;margin-top:14px" data-a="lib">Ir para a biblioteca</button>');
+  if(order.ids.length===1)window.open(sUrl(byId(order.ids[0])),"_blank","noopener");cart=[];cnt();}
+ else if(a==="lib"){hide();location.hash="#biblioteca";route()}
+ else if(a==="verify"){
+  if(CFG.modoTeste){paidNow();route()}
+  else{var msg=encodeURIComponent("Olá! Paguei meu pedido "+order.id+" ("+brl(order.v)+").");
+   show(head("Confirmação")+'<p class="mut">Envie o comprovante para liberarmos seu acesso.</p><a class="btn mono" style="width:100%;text-align:center" target="_blank" rel="noopener" href="https://wa.me/'+CFG.whats+'?text='+msg+'">Enviar comprovante</a>')}}
+});
+document.addEventListener("click",function(e){var a=e.target.closest("a[data-pay]");if(a)track("add_payment_info",{currency:"BRL",payment_type:"externo"})});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")hide()});
+window.addEventListener("hashchange",route);
+document.addEventListener('pointermove',function(e){var c=e.target.closest&&e.target.closest('.bk');if(!c)return;var b=c.getBoundingClientRect();c.style.setProperty('--ry',((e.clientX-b.left)/b.width-.5)*40+'deg');c.style.setProperty('--rx',(-((e.clientY-b.top)/b.height-.5))*40+'deg')});document.addEventListener('pointerout',function(e){var c=e.target.closest&&e.target.closest('.bk');if(c){c.style.removeProperty('--rx');c.style.removeProperty('--ry')}});
+$("mail").textContent=CFG.email;$("mail").href="mailto:"+CFG.email;
+gaInit();route();
+</script>
+</body>
+</html>
